@@ -19,6 +19,7 @@ except ImportError:
 
 import cryptography.hazmat.primitives.asymmetric.ec as EC
 import cryptography.hazmat.primitives.asymmetric.rsa as RSA
+import cryptography.hazmat.primitives.hashes as hashes
 
 import ecdsa
 
@@ -125,6 +126,9 @@ def sign_payload(private_key, payload):
         print("Signing payload using the HSM.")
         key_type = private_key.key_type
         mechanism, mechanism_params = get_mechanism(key_type)
+        digest = hashes.Hash(hashes.SHA256())
+        digest.update(payload)
+        payload = digest.finalize()
         signature = private_key.sign(
             data=payload, mechanism=mechanism, mechanism_param=mechanism_params
         )
@@ -151,7 +155,7 @@ def sign_payload(private_key, payload):
 
 def get_mechanism(key_type):
     if key_type == pkcs11.mechanisms.KeyType.RSA:
-        return pkcs11.mechanisms.Mechanism.SHA256_RSA_PKCS_PSS, (
+        return pkcs11.mechanisms.Mechanism.RSA_PKCS_PSS, (
             pkcs11.mechanisms.Mechanism.SHA256,
             pkcs11.MGF.SHA256,
             32,
