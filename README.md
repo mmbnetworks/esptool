@@ -1,3 +1,13 @@
+# What is this branch for?
+
+We took esptool.py from upstream and applied:
+
+- A workaround to enable image signing with NitroKey HSM2
+- A way to prompt for HSM Pin instead of plaintext data in config files
+- A collection of scripts to make this branch a standalone `release engineer` tooling for MMB BRD21 `prod.secure` binary release
+  - See `README.brd21.release.engineer.md` in this repo for more details
+
+# Original Upstream README.md below
 # esptool.py
 
 A Python-based, open-source, platform-independent utility to communicate with the ROM bootloader in Espressif chips.
