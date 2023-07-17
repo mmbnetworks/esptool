@@ -30,23 +30,22 @@ productVariantArg=$unsetVal
 buildVariantArg=$unsetVal
 versionArg=$unsetVal
 unsignedFlasherBundleArg=$unsetVal
-signedFlasherBundleArg=$unsetVal
+signedFlasherBundle=$unsetVal
 verboseArg=$unsetVal
 
 # Parse for CLI arguments
 # ------------------------------------------------------------------------------
 
-if [ "$#" -ne 5 ]; then
-    printf "Arguments Count: $# is insufficient\n\n"
-    printf "ArgList: <product-variant>  <build-variant>  <expected-version>  <input-flasher-bundle>  <output-flasher-bundle>\n"
-    printf "Example:    tme.sifton        prod.secure         0.9.4            bundle-unsigned.tar      bundle-signed.tar\n"
+if [ "$#" -ne 4 ]; then
+    printf "Arguments Count: $# is insufficient, need args exactly like this\n\n"
+    printf "ArgList: <product-variant>  <build-variant>  <expected-version>  <input-flasher-bundle> \n"
+    printf "Example:    tme.sifton        prod.secure         0.9.4            bundle-unsigned.tar  \n"
     exit 1
 else
     productVariantArg=$1
     buildVariantArg=$2
     versionArg=$3
     unsignedFlasherBundleArg=$4
-    signedFlasherBundleArg=$5
 fi
 
 # Tracer prints for Arg parsing
@@ -58,7 +57,6 @@ if [ $verboseArg == "YES" ]; then
     printf "build variant           = ${buildVariantArg}\n"
     printf "expected version        = ${versionArg}\n"
     printf "unsigned flasher bundle = ${unsignedFlasherBundleArg}\n"
-    printf "signed flasher bundle   = ${signedFlasherBundleArg}\n"
 fi
 
 # Access and extract input-flasher-bundle to our workingDir
@@ -191,14 +189,19 @@ fi
 
 # Package up the signed flasher bundle
 # ------------------------------------------------------------------------------
-rm -f $signedFlasherBundleArg # remove any stale copy
-tar -caf $signedFlasherBundleArg $workingDir # generate a new archive
+# We generate the name based on the command arg and what we found inside the input-flasher-bundle
+signedFlasherBundle="flasher-bundle-$productVariantArg-$buildVariantArg-$inputVersion-$inputGitHash.signed.tar"
+
+rm -f $signedFlasherBundle # remove any stale copy
+tar -caf $signedFlasherBundle $workingDir # generate a new archive
 if [ $? -eq 0 ]; then
-    printf "\n  output bundle: $signedFlasherBundleArg generation complete [OK]\n"
+    printf "\n output bundle: $signedFlasherBundle generation complete [OK]\n"
 else
-    printf "\n  output bundle: $signedFlasherBundleArg generation complete [ERR]\n"
+    printf "\n output bundle: $signedFlasherBundle generation complete [ERR]\n"
     exit 1
 fi
 
 # Let the release engineer know where the file is so they can re-upload it
-printf "\n ALL DONE, please upload $signedFlasherBundleArg back to build system\n"
+printf "\n ALL DONE, please upload\n"
+printf "\n ---- $signedFlasherBundle ----\n"
+printf "\n back to the build system\n"
