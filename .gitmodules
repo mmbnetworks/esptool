@@ -1,0 +1,3 @@
+[submodule "release-engineer-tools/brd21-swu-ota-generator"]
+	path = release-engineer-tools/brd21-swu-ota-generator
+	url = git@github.com:mmbnetworks/brd21-swu-ota-generator.git
