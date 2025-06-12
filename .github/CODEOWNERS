@@ -1,0 +1,7 @@
+# The release-engineer-tools script is important as it manages production secrets.
+# As such, we don't want to be able to merge changes to it without approval.
+release-engineer-tools/**    @mmb-davidsmith @lucas-mmb @rretanubun
+
+# We also need to protect the codeowners file to ensure that it can't be changed
+# without proper approval.
+**/CODEOWNERS @mmb-davidsmith @lucas-mmb @rretanubun
