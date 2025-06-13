@@ -1,7 +1,7 @@
 # DEPRECATED!
 
 The `/release-engineer-tools` folder in this repo slated to be
-migrated into brd21-nitrokey-hsm2-release-engineer-tooling
+migrated into https://github.com/mmbnetworks/mmb-brd2x-build-support
 
 This repo will eventually only contains:
 
