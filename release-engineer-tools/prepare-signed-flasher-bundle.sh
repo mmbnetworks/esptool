@@ -167,12 +167,17 @@ fi
 # Generate SWU OTA (hint: add --verbose to CLI args if you run into issues here)
 otaGenScript="release-engineer-tools/brd21-swu-ota-generator/mmb/ota_gen.sh"
 swuOTAUnSignedBin="$workingDir/ota-unsigned.bin"
+swuOTAUnSignedBinTEST="otaTest.bin"
 $otaGenScript --application=$applicationSignedBin --versionfile=$versionInputTxt --output=$swuOTAUnSignedBin
+$otaGenScript --application=$applicationSignedBin --versionfile=$versionInputTxt --output=$swuOTAUnSignedBinTEST
 if [ $? -eq 0 ]; then
     printf "\n ota gen: Unsigned SWU OTA [OK]\n"
-    apt-get install -y vim-common
     echo "OTA UNSIGNED HEADER:"
     magic=$(hexdump -n 4 -e '4/1 "%02x"' "$swuOTAUnSignedBin")
+    echo "magic = $magic"
+
+    echo "OTA UNSIGNED TEST HEADER:"
+    magic=$(hexdump -n 4 -e '4/1 "%02x"' "$swuOTAUnSignedBinTEST")
     echo "magic = $magic"
 else
     printf "\n ota gen: Unsigned SWU OTA [ERR]\n"
