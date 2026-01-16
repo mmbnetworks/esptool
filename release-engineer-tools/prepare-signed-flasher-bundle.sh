@@ -170,6 +170,10 @@ swuOTAUnSignedBin="$workingDir/ota-unsigned.bin"
 $otaGenScript --application=$applicationSignedBin --versionfile=$versionInputTxt --output=$swuOTAUnSignedBin
 if [ $? -eq 0 ]; then
     printf "\n ota gen: Unsigned SWU OTA [OK]\n"
+    apt-get install -y vim-common
+    echo "OTA UNSIGNED HEADER:"
+    magic=$(hexdump -n 4 -e '4/1 "%02x"' "$swuOTAUnSignedBin")
+    echo "magic = $magic"
 else
     printf "\n ota gen: Unsigned SWU OTA [ERR]\n"
     exit 1
