@@ -6,8 +6,9 @@ migrated into https://github.com/mmbnetworks/mmb-brd2x-build-support
 This repo will eventually only contains:
 
 esptool from upstream at v4.7 and applied our fixes:
-- A workaround to enable image signing with NitroKey HSM2
-- A way to prompt for HSM Pin instead of plaintext data in config files
+- [A workaround to enable image signing with NitroKey HSM2](e886cd71e46722a550258bcbd41bfb71f16831f1)
+  - Update: 09-Feb-2026: [Should be fixed with a recent version of OpenSC](https://github.com/OpenSC/OpenSC/discussions/2802#discussioncomment-15743504)
+- [A way to prompt for HSM Pin instead of plaintext data in config files](e0a87cc4f6ef625548918f4d011ee5e707356773)
 
 
 # How We use it today
